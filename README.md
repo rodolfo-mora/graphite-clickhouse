@@ -4,7 +4,10 @@ git clone https://github.com/lomik/graphite-clickhouse-tldr
 cd graphite-clickhouse-tldr
 docker-compose up
 ```
-Open http://127.0.0.1/ in browser
+Original code:
+https://github.com/lomik/graphite-clickhouse-tldr
+
+This repo is only a way to backup all my configurations.
 
 ### Mapped Ports
 
