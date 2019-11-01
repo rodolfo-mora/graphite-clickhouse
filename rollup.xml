@@ -1,0 +1,104 @@
+<yandex>
+    <graphite_rollup>
+        <path_column_name>Path</path_column_name>
+        <time_column_name>Time</time_column_name>
+        <value_column_name>Value</value_column_name>
+        <version_column_name>Timestamp</version_column_name>
+        <default>
+            <function>avg</function>
+            <retention>
+                <age>0</age>
+                <precision>60</precision>
+            </retention>
+            <retention>
+                <age>2592000</age>
+                <precision>3600</precision>
+            </retention>
+        </default>
+    </graphite_rollup>
+    <!-- Port for communication between replicas. Used for data exchange. -->
+    <interserver_http_port>9009</interserver_http_port>
+
+    <!-- Listen specified host. use :: (wildcard IPv6 address), if you want to accept connections both with IPv4 and IPv6 from everywhere. -->
+    <!-- <listen_host>::</listen_host> -->
+    <!-- Same for hosts with disabled ipv6: -->
+
+    <listen_host>::</listen_host>
+    <listen_host>0.0.0.0</listen_host>
+    <listen_try>1</listen_try>
+
+    <remote_servers incl="clickhouse_remote_servers">
+        <Graphite>
+            <shard>
+                <!-- Optional. Shard weight when writing data. Default: 1. -->
+                <weight>1</weight>
+                <!-- Optional. Whether to write data to just one of the replicas. Default: false (write data to all replicas). -->
+                <internal_replication>false</internal_replication>
+                <replica>
+                    <host>10.128.0.19</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>10.128.0.20</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <weight>1</weight>
+                <internal_replication>false</internal_replication>
+                <replica>
+                    <host>10.128.0.21</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <replica>
+                    <host>10.128.0.22</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </Graphite>
+    </remote_servers>
+<zookeeper-servers>
+    <node>
+        <host>10.128.0.19</host>
+        <port>2181</port>
+    </node>
+    <node>
+        <host>10.128.0.20</host>
+        <port>2181</port>
+    </node>
+    <node>
+        <host>10.128.0.21</host>
+        <port>2181</port>
+    </node>
+    <node>
+        <host>10.128.0.22</host>
+        <port>2181</port>
+    </node>
+</zookeeper-servers>
+<graphite>
+    <host>localhost</host>
+    <port>2003</port>
+    <timeout>0.1</timeout>
+    <interval>60</interval>
+    <root_path>one_min_cr_plain</root_path>
+
+    <metrics>true</metrics>
+    <events>true</events>
+    <asynchronous_metrics>true</asynchronous_metrics>
+</graphite>
+<graphite>
+    <host>localhost</host>
+    <port>2003</port>
+    <timeout>0.1</timeout>
+    <interval>1</interval>
+    <root_path>one_sec_cr_plain</root_path>
+
+    <metrics>true</metrics>
+    <events>true</events>
+    <asynchronous_metrics>false</asynchronous_metrics>
+</graphite>
+</yandex>
